@@ -14,7 +14,7 @@ preprocessor_all = joblib.load('preprocessor_all.pkl')
 default_values = {
   'Age': 30,  # Will be overwritten by user input
   'Span ft': 300,  # Will be overwritten by user input
-  'Deck width ft': 20,  # Will be overwritten by user input
+  'Deck Width ft': 20,  # Will be overwritten by user input
   'Condition Rating': 4,
   'Num Lanes': 6,  # Will be overwritten by user input
   'Material': 'Steel',  # Will be overwritten by user input
@@ -27,10 +27,10 @@ model_choice = st.sidebar.radio("Select Model", ("Essential Features Model", "Al
 st.header("Input Bridge Data (Essential Only)")
 
 # User inputs for essential features
-Age = st.number_input("Age_years", min_value=0, max_value=200, value=30)
+Age = st.number_input("Age", min_value=0, max_value=200, value=30)
 Span_ft = st.number_input("Span ft", min_value=0, max_value=300, value=600)
 Deck_Width_ft = st.number_input("Deck width ft", min_value=0, max_value=20, value=50)
-Condition_rating = st.number_input("Deck Rating (1-5)", min_value=1, max_value=10, value=4)
+Condition Rating = st.number_input("Cpndition Rating", min_value=1, max_value=10, value=4)
 Num_Lanes = st.number_input("Num Lanes", min_value=1, max_value=6, value=6)
 Material = st.selectbox("Material", options=["Steel", "Composite", "Concrete"])
 
@@ -57,8 +57,8 @@ if st.button("Predict Max Load Tons"):
         # Overwrite the essential features with user inputs
         default_all.loc[0, 'Age'] = Age
         default_all.loc[0, 'Span ft'] = Span_ft
-        default_all.loc[0, 'Deck width ft'] = Deck_Width_ft
-        default_all.loc[0, 'Condition Rating'] = Condition_rating
+        default_all.loc[0, 'Deck Width ft'] = Deck_Width_ft
+        default_all.loc[0, 'Condition Rating'] = Condition_Rating
         default_all.loc[0, 'Num Lanes'] = Num_Lanes
         default_all.loc[0, 'Material'] = Material
         
