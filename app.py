@@ -41,7 +41,7 @@ if st.button("Predict Max Load Tons"):
         input_data = pd.DataFrame({
             'Age': [Age],
             'Span ft': [Span_ft],
-            'Deck width ft': [Deck_Width_ft],
+            'Deck Width ft': [Deck_Width_ft],
             'Condition Rating': [Condition_Rating],
             'Num Lanes': [Num_Lanes],
             'Material': [Material]
