@@ -46,14 +46,43 @@ if st.button("Predict Max Load Tons"):
             'Num Lanes': [Num_Lanes],
             'Material': [Material]
         })
+
+        # Debugging: Print expected vs actual columns
+        expected_columns = preprocessor_selected.get_feature_names_out()
+        st.write("Expected columns:", expected_columns)
+        st.write("Input data columns:", input_data.columns.tolist())
+
+        # Ensure input columns match the expected columns
+        expected_columns_set = set(expected_columns)
+        actual_columns_set = set(input_data.columns)
+
+        missing_columns = expected_columns_set - actual_columns_set
+        extra_columns = actual_columns_set - expected_columns_set
+
+        if missing_columns:
+            st.error(f"Missing columns: {missing_columns}")
+        if extra_columns:
+            st.warning(f"Unexpected extra columns: {extra_columns}")
+
+        # Rename columns if necessary
+        column_mapping = {"Span_ft": "Span ft", "Deck_Width_ft": "Deck Width ft"}
+        input_data.rename(columns=column_mapping, inplace=True)
+
+        # Add missing columns with default values
+        for col in expected_columns:
+            if col not in input_data.columns:
+                input_data[col] = 0  # Or an appropriate default value
+
         # Preprocess input using the selected-features preprocessor
         processed_data = preprocessor_selected.transform(input_data)
+
         # Get prediction from the essential-features model
         prediction = model_selected.predict(processed_data)
         st.success(f"Predicted Max Load Tons (Essential Model): ${prediction[0][0]:,.2f}")
+
     else:
         default_all = pd.read_csv('default_all_features.csv', index_col=0)
-        # Now, 'default_all' contains all the features expected by the preprocessor.
+
         # Overwrite the essential features with user inputs
         default_all.loc[0, 'Age'] = Age
         default_all.loc[0, 'Span ft'] = Span_ft
@@ -61,7 +90,28 @@ if st.button("Predict Max Load Tons"):
         default_all.loc[0, 'Condition Rating'] = Condition_Rating
         default_all.loc[0, 'Num Lanes'] = Num_Lanes
         default_all.loc[0, 'Material'] = Material
-        
+
+        # Debugging: Print expected vs actual columns for the all-features model
+        expected_columns = preprocessor_all.get_feature_names_out()
+        st.write("Expected columns:", expected_columns)
+        st.write("Input data columns:", default_all.columns.tolist())
+
+        expected_columns_set = set(expected_columns)
+        actual_columns_set = set(default_all.columns)
+
+        missing_columns = expected_columns_set - actual_columns_set
+        extra_columns = actual_columns_set - expected_columns_set
+
+        if missing_columns:
+            st.error(f"Missing columns: {missing_columns}")
+        if extra_columns:
+            st.warning(f"Unexpected extra columns: {extra_columns}")
+
+        # Add missing columns with default values
+        for col in expected_columns:
+            if col not in default_all.columns:
+                default_all[col] = 0  # Or an appropriate default value
+
         processed_data = preprocessor_all.transform(default_all)
         prediction = model_all.predict(processed_data)
         st.success(f"Predicted Max Load Tons (All Features Model): ${prediction[0][0]:,.2f}")
