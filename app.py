@@ -67,7 +67,4 @@ if st.button("Predict Max Load Tons"):
         st.success(f"Predicted Max Load Tons (All Features Model): ${prediction[0][0]:,.2f}")
 
 
-for name, transformer, columns in preprocessor_selected.transformers_:
-    print(f"Transformer: {name}")
-    print(f"Columns expected: {columns}")
 
