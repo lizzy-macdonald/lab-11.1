@@ -42,7 +42,7 @@ if st.button("Predict Max Load Tons"):
             'Age': [Age],
             'Span ft': [Span_ft],
             'Deck width ft': [Deck_Width_ft],
-            'Condition Rating': [Condition_rating],
+            'Condition Rating': [Condition_Rating],
             'Num Lanes': [Num_Lanes],
             'Material': [Material]
         })
