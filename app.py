@@ -3,11 +3,7 @@ import pandas as pd
 import joblib
 from tensorflow import keras
 import tensorflow as tf
-
 import os
-print("Current directory:", os.getcwd())
-print("Files in directory:", os.listdir())
-
 
 # === Load pre-trained models and preprocessors ===
 model_selected = keras.models.load_model('model_selected.h5')
@@ -71,7 +67,7 @@ if st.button("Predict Max Load Tons"):
         prediction = model_all.predict(processed_data)
         st.success(f"Predicted Max Load Tons (All Features Model): ${prediction[0][0]:,.2f}")
 
-print("Dataset columns:", model_selected_all.columns)
+print("Dataset columns:", model_selected.columns)
 print("Expected columns:", preprocessor_all.get_feature_names_out())
 
 
