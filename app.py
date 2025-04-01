@@ -66,6 +66,8 @@ if st.button("Predict Max Load Tons"):
         prediction = model_all.predict(processed_data)
         st.success(f"Predicted Max Load Tons (All Features Model): ${prediction[0][0]:,.2f}")
 
+print("Dataset columns:", default_all.columns)
+print("Expected columns:", preprocessor_all.get_feature_names_out())
 
 
 
